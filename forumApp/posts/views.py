@@ -3,7 +3,7 @@ from datetime import datetime
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
-from forumApp.posts.forms import SearchForm, PostCreateForm, PostDeleteForm
+from forumApp.posts.forms import SearchForm, PostCreateForm, PostDeleteForm, PostEditForm
 from forumApp.posts.models import Post
 
 
@@ -52,7 +52,22 @@ def add_post(request):
 
 
 def edit_post(request, pk: int):
-    return HttpResponse()
+    post = Post.objects.get(pk=pk)
+
+    if request.method == 'POST':
+        form = PostEditForm(request.POST, instance=post)
+        if form.is_valid():
+            post.save()
+            return redirect('dash')
+
+    else:
+        form = PostEditForm(instance=post)
+    context = {
+        "form": form,
+        "post": post,
+    }
+
+    return render(request, 'posts/edit-post.html', context)
 
 
 def details_post(request, pk: int):
