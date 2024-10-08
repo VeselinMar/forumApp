@@ -1,0 +1,64 @@
+# Python specific
+*.py[cod]
+__pycache__/
+*$py.class
+
+# Django specific
+db.sqlite3
+/media/
+staticfiles/
+static/
+*.log
+*.pot
+*.mo
+
+# Virtual environment
+venv/
+.env/
+ENV/
+.venv/
+
+# Distribution / packaging
+.Python
+build/
+dist/
+downloads/
+eggs/
+.eggs/
+*.egg-info/
+.installed.cfg
+wheels/
+share/python-wheels/
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+
+# IDE/Editor specific
+.idea/
+.vscode/
+
+# macOS files
+.DS_Store
+
+# Windows files
+Thumbs.db
+Desktop.ini
+
+# Backup files
+*.bak
+*.swp
+*.swo
+*.swn
+*~
+
+# Secrets
+.env
