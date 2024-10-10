@@ -13,7 +13,7 @@ def index(request):
         "my_form": "",
     }
 
-    return render(request, 'base.html', context)
+    return render(request, 'posts/index.html', context)
 
 
 def dashboard(request):

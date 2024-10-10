@@ -1,9 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'common/base.html' %}
 {% load static %}
 {% load markdown_extras %}
 
 <body>
     {% block content %}
+        {% include 'posts/search-form.html' %}
+        <h1>Posts</h1>
         <div class="container">
             <div class="posts">
             {% for post in posts %}
@@ -13,7 +15,7 @@
                     {% if not post.content %}
                         {% lorem 3 p %}
                     {% else %}
-                        {{ post.content|markdown }}
+                        <p>{{ post.content|truncatewords:100|markdown }}</p>
                     {% endif %}
 
                     <div class="post-meta">
