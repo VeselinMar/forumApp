@@ -1,9 +1,11 @@
 {% extends 'common/base.html' %}
 {% load static %}
 {% load markdown_extras %}
+{% load current_time %}
 
 <body>
     {% block content %}
+        <p>Last refresh: {% current_time %}</p>
         {% include 'posts/search-form.html' %}
         <h1>Posts</h1>
         <div class="container">
@@ -15,7 +17,7 @@
                     {% if not post.content %}
                         {% lorem 3 p %}
                     {% else %}
-                        <p>{{ post.content|truncatewords:100|markdown }}</p>
+                        <p>{{ post.content|truncatewords:150|markdown }}</p>
                     {% endif %}
 
                     <div class="post-meta">

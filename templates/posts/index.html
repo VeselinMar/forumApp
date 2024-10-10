@@ -1,9 +1,10 @@
 {% extends 'common/base.html' %}
 {% load static %}
 {% load markdown_extras %}
+{% load user_info %}
 
 <body>
     {% block content %}
-        <h1>Welcome!</h1>
+        <h1>{% user_info %}</h1>
     {% endblock %}
 </body>
