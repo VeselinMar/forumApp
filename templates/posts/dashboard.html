@@ -11,7 +11,7 @@
             <div class="posts">
             {% for post in posts %}
                 <div class="post">
-                    <h2><a href="{% url 'details-post' post.pk %}">{{ post.title|capfirst }}</a></h2>
+                    <h2><a href="{% url 'details-post' post.pk %}" style="text-decoration: none">{{ post.title|capfirst }}</a></h2>
 
                     {% if not post.content %}
                         {% lorem 3 p %}
