@@ -5,7 +5,6 @@
 
 <body>
     {% block content %}
-        <p>Last refresh: {% current_time %}</p>
         {% include 'posts/search-form.html' %}
         <h1>Posts</h1>
         <div class="container">
@@ -27,6 +26,7 @@
             {% empty %}
                 <h1>No Posts</h1>
             {% endfor %}
+            <p>Last refresh: {% current_time %}</p>
         </div>
     </div>
 {% endblock %}
