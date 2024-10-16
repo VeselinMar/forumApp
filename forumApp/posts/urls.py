@@ -1,5 +1,6 @@
 from django.urls import path, include
-from forumApp.posts.views import dashboard, index, add_post, edit_post, details_post, delete_post
+from forumApp.posts.views import dashboard, index, add_post, edit_post, details_post, delete_post, add_comment, \
+    edit_comment, delete_comment
 
 urlpatterns = [
     path('', index, name='index'),
@@ -9,5 +10,8 @@ urlpatterns = [
         path('delete-post/', delete_post, name='delete-post'),
         path('details-post/', details_post, name='details-post'),
         path('edit-post/', edit_post, name='edit-post'),
+        path('add-comment/', add_comment, name='add-comment'),
+        path('edit-comment/', edit_comment, name='edit-comment'),
+        path('delete-comment/', delete_comment, name='delete-comment')
     ]))
 ]

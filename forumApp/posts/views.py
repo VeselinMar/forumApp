@@ -3,8 +3,9 @@ from datetime import datetime
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
-from forumApp.posts.forms import SearchForm, PostCreateForm, PostDeleteForm, PostEditForm
-from forumApp.posts.models import Post
+from forumApp.posts.forms import SearchForm, PostCreateForm, PostDeleteForm, PostEditForm, CommentCreateForm, \
+    CommentEditForm
+from forumApp.posts.models import Post, Comment
 
 
 def index(request):
@@ -72,9 +73,17 @@ def edit_post(request, pk: int):
 
 def details_post(request, pk: int):
     post = Post.objects.get(pk=pk)
+    form = CommentCreateForm(request.POST or None)
+
+    if request.method == 'POST' and form.is_valid():
+        comment = form.save(commit=False)
+        comment.post = post
+        comment.save()
+        return redirect('details-post', pk=post.pk)
 
     context = {
-        "post": post
+        "post": post,
+        "form": form,
     }
 
     return render(request, 'posts/details-post.html', context)
@@ -94,3 +103,48 @@ def delete_post(request, pk: int):
     }
 
     return render(request, 'posts/delete-template.html', context)
+
+
+def add_comment(request, pk: int):
+    post = Post.objects.get(pk=pk)
+
+    if request.method == 'POST':
+        form = CommentCreateForm(request.POST or None)
+
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.save()
+            return redirect('details-post', pk=post.pk)
+
+    else:
+        form = CommentCreateForm()
+
+    context = {
+        'form': form,
+        'post': post,
+    }
+
+    return render(request, 'comments/add-comment.html', context)
+
+
+def edit_comment(request, pk=int):
+    comment = Comment.objects.get(pk=pk)
+
+    if request.method == 'POST':
+        form = CommentEditForm(request.POST, instance=comment)
+        if form.is_valid():
+            form.save()
+            return redirect('dash')
+
+    else:
+        form = CommentEditForm(instance=comment)
+    context = {
+        "form": form,
+        "comment": comment,
+    }
+
+    return render(request, 'comments/edit-comment.html', context)
+
+def delete_comment():
+    pass

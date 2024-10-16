@@ -1,0 +1,9 @@
+{% load static %}
+{% load markdown_extras %}
+
+
+<form action="{% url 'add-comment' post.pk %}" method="post">
+    {{ form }}
+    {%  csrf_token %}
+    <button class="button-8">Add Comment</button>
+</form>

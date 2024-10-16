@@ -24,7 +24,8 @@
                     </div>
                 </div>
             {% empty %}
-                <h1>No Posts</h1>
+                <h1>There are no posts yet! Would you like to contribute?</h1>
+                <button class="button-8"><a href={% url 'add-post' %}>Create Post</a></button>
             {% endfor %}
             <p>Last refresh: {% current_time %}</p>
         </div>

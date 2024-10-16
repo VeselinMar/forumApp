@@ -28,3 +28,20 @@ class Post(models.Model):
         choices=LanguageChoice.choices,
         default=LanguageChoice.OTHER,
     )
+
+
+class Comment(models.Model):
+    content = models.TextField(
+        max_length=300,
+        validators=(
+            BadLanguageValidator(),
+        )
+    )
+    post = models.ForeignKey(
+        to=Post,
+        on_delete=models.CASCADE
+    )
+
+    def __str__(self):
+        return self.content
+

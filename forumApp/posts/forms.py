@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from forumApp.posts.models import Post
+from forumApp.posts.models import Post, Comment
 
 
 class PostBaseForm(forms.ModelForm):
@@ -37,3 +37,28 @@ class SearchForm(forms.Form):
             }
         )
     )
+
+
+class CommentBaseForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
+        labels = {
+            'content': 'Your Comment'
+        }
+
+
+class CommentCreateForm(CommentBaseForm):
+    pass
+
+
+class CommentEditForm(CommentBaseForm):
+    pass
+
+
+class CommentDeleteForm(CommentBaseForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for field in self.fields:
+            self.fields[field].disabled = True

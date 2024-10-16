@@ -1,0 +1,15 @@
+{% extends 'common/base.html' %}
+{% load static %}
+{% load markdown_extras %}
+
+<body>
+    {% block content %}
+        <div class="container">
+            <form action="{% url 'edit-comment' comment.pk %}" method="post">
+                {{ form }}
+                {%  csrf_token %}
+                <button class="button-8">Edit Comment</button>
+            </form>
+        </div>
+    {% endblock %}
+</body>
