@@ -10,7 +10,7 @@
             <form action="{% url 'delete-comment' post.pk comment.pk %}" method="post">
                 {%  csrf_token %}
                 <button class="button-8">Delete Comment.</button>
-                <a href="{% url 'details-post' post.pk %}" class="button-8">Cancel</a>
+                <a href="{% url 'details-post' post.pk %}" class="button-10">Cancel</a>
             </form>
         </div>
     {% endblock %}
