@@ -11,7 +11,7 @@ urlpatterns = [
         path('details-post/', details_post, name='details-post'),
         path('edit-post/', edit_post, name='edit-post'),
         path('add-comment/', add_comment, name='add-comment'),
-        path('edit-comment/', edit_comment, name='edit-comment'),
-        path('delete-comment/', delete_comment, name='delete-comment')
+        path('edit-comment/<int:comment_pk>/', edit_comment, name='edit-comment'),
+        path('delete-comment/<int:comment_pk>/', delete_comment, name='delete-comment')
     ]))
 ]

@@ -5,7 +5,7 @@
 <body>
     {% block content %}
         <div class="container">
-            <form action="{% url 'edit-comment' comment.pk %}" method="post">
+            <form action="{% url 'edit-comment' post.pk comment.pk %}" method="post">
                 {{ form }}
                 {%  csrf_token %}
                 <button class="button-8">Edit Comment</button>

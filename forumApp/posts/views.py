@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 from forumApp.posts.forms import SearchForm, PostCreateForm, PostDeleteForm, PostEditForm, CommentCreateForm, \
-    CommentEditForm
+    CommentEditForm, CommentDeleteForm
 from forumApp.posts.models import Post, Comment
 
 
@@ -128,23 +128,39 @@ def add_comment(request, pk: int):
     return render(request, 'comments/add-comment.html', context)
 
 
-def edit_comment(request, pk=int):
-    comment = Comment.objects.get(pk=pk)
+def edit_comment(request, pk: int, comment_pk: int):
+    post = Post.objects.get(pk=pk)
+    comment = Comment.objects.get(pk=comment_pk)
 
     if request.method == 'POST':
         form = CommentEditForm(request.POST, instance=comment)
         if form.is_valid():
             form.save()
-            return redirect('dash')
+            return redirect('details-post', pk=post.pk)
 
     else:
         form = CommentEditForm(instance=comment)
+
     context = {
+        "post": post,
         "form": form,
         "comment": comment,
     }
 
     return render(request, 'comments/edit-comment.html', context)
 
-def delete_comment():
-    pass
+
+def delete_comment(request, pk: int, comment_pk: int):
+    post = Post.objects.get(pk=pk)
+    comment = Comment.objects.get(pk=comment_pk)
+
+    if request.method == "POST":
+        comment.delete()
+        return redirect('details-post', pk=post.pk)
+
+    context = {
+        "post": post,
+        "comment": comment
+    }
+
+    return render(request, 'comments/delete-comment.html', context)
