@@ -3,6 +3,10 @@
 {% load markdown_extras %}
 {% load current_time %}
 
+<head>
+    <script src="{% static 'javascript/update_time.js' %}"></script>
+</head>
+
 <body>
     {% block content %}
         {% include 'posts/search-form.html' %}
@@ -27,7 +31,7 @@
                 <h1>There are no posts yet! Would you like to contribute?</h1>
                 <button class="button-8"><a href={% url 'add-post' %}>Create Post</a></button>
             {% endfor %}
-            <p>Last refresh: {% current_time %}</p>
+            <p>Last refresh: <span id="current-time">{% current_time %}</span></p>
         </div>
     </div>
 {% endblock %}
