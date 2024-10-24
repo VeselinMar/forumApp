@@ -1,7 +1,8 @@
+from django.core.paginator import Paginator
 from django.forms import modelform_factory
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, ListView, FormView, CreateView, UpdateView, DeleteView
+from django.views.generic import TemplateView, ListView, FormView, CreateView, UpdateView, DeleteView, DetailView
 
 from forumApp.posts.forms import SearchForm, PostCreateForm, PostDeleteForm, CommentCreateForm, \
     CommentEditForm
@@ -39,6 +40,35 @@ class DashboardView(ListView, FormView):
             queryset = self.queryset.filter(title__icontains=query)
 
         return queryset
+
+
+# post_view as a ClassBasedView
+class PostDetailView(DetailView):
+    model = Post
+    template_name = 'posts/details-post.html'
+    paginate_by = 3
+
+    def get_context_data(self, **kwargs):
+        print(PostDetailView.__mro__)
+        context = super().get_context_data(**kwargs)
+        context['form'] = CommentCreateForm()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        post = self.get_object()
+        form = CommentCreateForm(request.POST)
+
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.save()
+            return redirect('details-post', pk=post.id)
+
+        context = self.get_context_data()
+        context['form'] = form
+
+        return self.render_to_response(context)
+
 
 # dashboard as a FunctionBasedView
 # def dashboard(request):
@@ -117,22 +147,22 @@ class EditPostView(UpdateView):
 
 
 # post_details FunctionBasedView
-def details_post(request, pk: int):
-    post = Post.objects.get(pk=pk)
-    form = CommentCreateForm(request.POST or None)
-
-    if request.method == 'POST' and form.is_valid():
-        comment = form.save(commit=False)
-        comment.post = post
-        comment.save()
-        return redirect('details-post', pk=post.pk)
-
-    context = {
-        "post": post,
-        "form": form,
-    }
-
-    return render(request, 'posts/details-post.html', context)
+# def details_post(request, pk: int):
+#     post = Post.objects.get(pk=pk)
+#     form = CommentCreateForm(request.POST or None)
+#
+#     if request.method == 'POST' and form.is_valid():
+#         comment = form.save(commit=False)
+#         comment.post = post
+#         comment.save()
+#         return redirect('details-post', pk=post.pk)
+#
+#     context = {
+#         "post": post,
+#         "form": form,
+#     }
+#
+#     return render(request, 'posts/details-post.html', context)
 
 
 # delete_post FunctionBasedView

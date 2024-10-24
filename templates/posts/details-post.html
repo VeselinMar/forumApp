@@ -29,7 +29,7 @@
             </div>
             </div>
          <div class="post">
-         <div>{% include 'comments/add-comment.html' %}">Add Comment</div>
+         <div>{% include 'comments/add-comment.html' %}</div>
              <div class="container">
                  {% if post.comment_set.exists %}
                      {% for comment in post.comment_set.all %}
